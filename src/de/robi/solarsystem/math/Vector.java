@@ -28,4 +28,8 @@ public record Vector(double x, double y) {
 	public Vector scale(double scalar) {
 		return new Vector(scalar * this.x, scalar * this.y);
 	}
+
+	public Vector normalize() {
+		return this.scale(1 / this.length());
+	}
 }

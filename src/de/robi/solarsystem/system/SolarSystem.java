@@ -3,7 +3,9 @@ package de.robi.solarsystem.system;
 import de.robi.solarsystem.math.Vector;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SolarSystem {
 	public final List<Body> bodies;
@@ -26,15 +28,14 @@ public class SolarSystem {
 				Vector r = body1.x.subtract(body2.x);
 
 				Vector force = r.scale(G / (r.square() * r.length()));
-
 				body1.a = body1.a.subtract(force.scale(body2.mass));
 				body2.a = body2.a.add(force.scale(body1.mass));
 			}
 		}
 
 		for (Body body : bodies) {
-			body.v = body.v.add(body.a.scale(t));
 			body.x = body.x.add(body.v.scale(t));
+			body.v = body.v.add(body.a.scale(t));
 		}
 	}
 
@@ -58,6 +59,25 @@ public class SolarSystem {
 		}
 
 		return sum.scale(1 / mass);
+	}
+
+	public double calculateEnergy() {
+		double V = 0;
+		double T = 0;
+
+		for(int i = 0; i < bodies.size(); i++) {
+			T += bodies.get(i).mass * bodies.get(i).v.square() / 2;
+			for(int j = i + 1; j < bodies.size(); j++) {
+				Body body1 = bodies.get(i);
+				Body body2 = bodies.get(j);
+
+				Vector r = body1.x.subtract(body2.x);
+
+				V -= 2 * body1.mass * body2.mass * G / r.length();
+			}
+		}
+
+		return V + T;
 	}
 
 	public static SolarSystem sol() {

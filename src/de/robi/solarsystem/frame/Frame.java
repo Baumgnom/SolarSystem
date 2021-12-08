@@ -68,12 +68,16 @@ public class Frame extends JFrame {
 
 				double ratio = (double) canvas.getWidth() / canvas.getHeight();
 
-				this.center = system.centerOfWeight(this.center, 200E9, 400E9);
+				//this.center = system.centerOfWeight(this.center, 200E9, 400E9);
 
-				double minX = (this.center.x() - 160E9) * ratio;
-				double minY = this.center.y() - 160E9;
-				double maxX = (this.center.x() + 160E9) * ratio;
-				double maxY = this.center.y() + 160E9;
+				this.center = system.bodies.get(0).x;
+
+				double dis = 160E9;
+
+				double minX = (this.center.x() - dis * ratio);
+				double minY = this.center.y() - dis;
+				double maxX = (this.center.x() + dis * ratio);
+				double maxY = this.center.y() + dis;
 
 				for(Body body : system.bodies) {
 					int px = (int) ((body.x.x() - minX) * canvas.getWidth() / (maxX - minX));
