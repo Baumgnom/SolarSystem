@@ -1,6 +1,9 @@
 package de.robi.solarsystem.math;
 
 public record Vector(double x, double y) {
+
+	public static final Vector nullVector = new Vector(0, 0);
+
 	public double dot(Vector b) {
 		return this.x*b.x + this.y*b.y;
 	}

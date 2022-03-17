@@ -24,4 +24,12 @@ public class Body {
 
 		return direction.scale(speed / direction.length());
 	}
+
+	public Vector getCircularTwoBodyOrbit(Vector pos, double mass) {
+		Vector r = pos.subtract(this.x); // get relative vector
+		Vector direction = new Vector(r.y(), - r.x()); // get direction orthogonal to relative vector
+		double speed = Math.sqrt(SolarSystem.G * mass * mass / (r.length() * (mass + this.mass)));
+
+		return direction.scale((speed / direction.length()));
+	}
 }

@@ -3,9 +3,7 @@ package de.robi.solarsystem.system;
 import de.robi.solarsystem.math.Vector;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SolarSystem {
 	public final List<Body> bodies;
@@ -46,13 +44,15 @@ public class SolarSystem {
 			double weight = 1;
 			if(anchor != null) {
 				Vector r = body.x.subtract(anchor);
-				double distance = r.square();
+				double distance = r.length();
 
-				weight = (distance + fadeEnd) / (fadeEnd - fadeStart);
+
+				weight = 1 - (distance - fadeStart) / (fadeEnd - fadeStart);
 
 				if(weight < 0) weight = 0;
 				else if(weight > 1) weight = 1;
 			}
+
 
 			sum = sum.add(body.x.scale(weight * body.mass));
 			mass += weight * body.mass;
